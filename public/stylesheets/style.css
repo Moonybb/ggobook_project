@@ -1,0 +1,11 @@
+body {
+  /* padding: 50px; */
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+/* navbar 높이 조절 - 20221003_moon */
+.navbar-nav > li > a { padding: 20px 22px }
