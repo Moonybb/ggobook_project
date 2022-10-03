@@ -38,8 +38,14 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+// 20221003_moon : database 라우터 추가 - DB생성이후 주석 제거 필요
+// const mysql = require('./database')();
+// const connection = mysql.init();
+// mysql.db_open(connection);
+
+
 // 20221003_moon : vendors 라우터 추가
-var vendorsRouter = require('./routes/vendors');
+const vendorsRouter = require('./routes/vendors');
 app.use('/vendors', vendorsRouter);
 
 module.exports = app;
