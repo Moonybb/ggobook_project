@@ -1,174 +1,194 @@
-사용 데이터베이스 : MariaDB
+
+DB: MariaDB
 
 /* -------------------- */
 /* TABLE UPDATE HISTORY */
 /* -------------------- */
 /* 1. 2022/10/04 COMMIT_오영문 : DB설계 초안 */
 /* 2. 2022/10/04 COMMIT_오영문 : ID 길이 15 -> 50 변경, 서적관레테이블 BK_PBSR(출판사) -> BK_PBSR_NM(출판사명) */
+/* 3. 2022/10/04 COMMIT_오영문 : REG_DTM, UPDT_DTM 컬럼 타입 DATE -> DATETIME 변경 */
+/* 4. 2022/10/04 COMMIT_오영문 : ATNT_BK_KD_CD1, ATNT_BK_KD_CD2, ATNT_BK_KD_CD3 길이 5 -> 6 변경 */
+/* 5. 2022/10/05 COMMIT_오영문 : 테이블 물리명 설정 추가 */
+
+
+/* -------------------------------------------------
+ * TABLE
+ *
+ * 고객기본테이블(TM_CS)
+ * 고객상세테이블 (TD_CS_DTL)
+ * 관리자기본테이블 (TM_ADM)
+ *
+ * 서적관리테이블 (TM_BK)
+ * 서적할인관리테이블 (TD_BK_SALE)
+ * 
+ * 장바구니테이블 (TM_CART)
+ * 결제거래테이블 (TM_PAY_TR)
+ * 결제배송테이블 (TM_PAY_DLV)
+ * ------------------------------------------------- */
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 ** 고객관리테이블
 
-    - 고객기본테이블
-	- CS_NO (PK)            VARCHAR(10)     고객번호
-	- CS_DV_CD              VARCHAR(2)      고객구분코드 (01: 일반, 02: 청소년 등)
-	- JON_DT                VARCHAR(8)      가입일자
-	- JON_DV_CD             VARCHAR(2)      가입구분코드 (KAKAO, NAVER 등)
-	- CS_ID                 VARCHAR(50)     고객ID
-	- CS_PWD_ENCR           VARCHAR(100)    고객PWD암호화
-	- CS_NM                 VARCHAR(30)     고객명
-	- IDFC_NO_ENCR          VARCHAR(100)    주민등록번호암호화
-	- CPNO                  VARCHAR(15)     휴대폰번호
-	- EMAL                  VARCHAR(50)     이메일주소
-	- BTDT                  VARCHAR(8)      생년월일
-	- SEX_CD                VARCHAR(1)      성별코드(M/W)
-	- SMS_YS_YN             VARCHAR(1)      SMS수신동의여부(Y/N)
-	- EMAL_YS_YN            VARCHAR(1)      이메일수신동의여부(Y/N)
-	- ATNT_BK_YN            VARCHAR(1)      관심서적여부(Y/N)
-	- ATNT_BK_KD_CD1        VARCHAR(5)      관심서적종류1
-	- ATNT_BK_KD_CD2        VARCHAR(5)      관심서적종류2
-	- ATNT_BK_KD_CD3        VARCHAR(5)      관심서적종류3
-	- RMK_CNTS              TEXT(50000)     비고
-	- REG_ID                VARCHAR(50)     등록자ID
-	- REG_DTM               DATE            등록일시
-	- UPDT_ID               VARCHAR(50)     수정자ID
-	- UPDT_DTM              DATE            수정일시
+    * 고객기본테이블(TM_CS)
+        - CS_NO (PK)            VARCHAR(10)     고객번호
+        - CS_DV_CD              VARCHAR(2)      고객구분코드 (01: 일반, 02: 청소년 등)
+        - JON_DT                VARCHAR(8)      가입일자
+        - JON_DV_CD             VARCHAR(2)      가입구분코드 (KAKAO, NAVER 등)
+        - CS_ID                 VARCHAR(50)     고객ID
+        - CS_PWD_ENCR           VARCHAR(100)    고객PWD암호화
+        - CS_NM                 VARCHAR(30)     고객명
+        - IDFC_NO_ENCR          VARCHAR(100)    주민등록번호암호화
+        - CPNO                  VARCHAR(15)     휴대폰번호
+        - EMAL                  VARCHAR(50)     이메일주소
+        - BTDT                  VARCHAR(8)      생년월일
+        - SEX_CD                VARCHAR(1)      성별코드(M/W)
+        - SMS_YS_YN             VARCHAR(1)      SMS수신동의여부(Y/N)
+        - EMAL_YS_YN            VARCHAR(1)      이메일수신동의여부(Y/N)
+        - ATNT_BK_YN            VARCHAR(1)      관심서적여부(Y/N)
+        - ATNT_BK_KD_CD1        VARCHAR(6)      관심서적종류1
+        - ATNT_BK_KD_CD2        VARCHAR(6)      관심서적종류2
+        - ATNT_BK_KD_CD3        VARCHAR(6)      관심서적종류3
+        - RMK_CNTS              TEXT(50000)     비고
+        - REG_ID                VARCHAR(50)     등록자ID
+        - REG_DTM               DATETIME        등록일시
+        - UPDT_ID               VARCHAR(50)     수정자ID
+        - UPDT_DTM              DATETIME        수정일시
 
-    - 고객상세테이블
-	- CS_NO (PK)            VARCHAR(10)     고객번호
-	- CS_SQNO (PK)          INT(4, 0)       고객상세일련번호
-	- USE_YN                VARCHAR(1)      사용여부
-	- DFLT_YN               VARCHAR(1)      기본여부 (총 1개만 Y일 수 있도록 개발되어야 함)
-	- ZIP                   VARCHAR(6)      배송우편번호
-	- ADR                   VARCHAR(255)    배송주소
-	- DADR                  VARCHAR(255)    배송상세주소
-	- ARE_CD                VARCHAR(10)     지역코드
-	- RMK_CNTS              TEXT(50000)     비고
-	- REG_ID                VARCHAR(50)     등록자ID
-	- REG_DTM               DATE            등록일시
-	- UPDT_ID               VARCHAR(50)     수정자ID
-	- UPDT_DTM              DATE            수정일시
+    * 고객상세테이블 (TD_CS_DTL)
+        - CS_NO (PK)            VARCHAR(10)     고객번호
+        - CS_SQNO (PK)          INT(4, 0)       고객상세일련번호
+        - USE_YN                VARCHAR(1)      사용여부
+        - DFLT_YN               VARCHAR(1)      기본여부 (총 1개만 Y일 수 있도록 개발되어야 함)
+        - ZIP                   VARCHAR(6)      배송우편번호
+        - ADR                   VARCHAR(255)    배송주소
+        - DADR                  VARCHAR(255)    배송상세주소
+        - ARE_CD                VARCHAR(10)     지역코드
+        - RMK_CNTS              TEXT(50000)     비고
+        - REG_ID                VARCHAR(50)     등록자ID
+        - REG_DTM               DATETIME        등록일시
+        - UPDT_ID               VARCHAR(50)     수정자ID
+        - UPDT_DTM              DATETIME        수정일시
 
-    - 관리자기본테이블
-	- ADM_NO (PK)           VARCHAR(10)     관리자번호
-	- ADM_ID                VARCHAR(50)     관리자ID
-	- ADM_PWD_ENCR          VARCHAR(100)    관리자PWD암호화
-	- ADM_BTDT              VARCHAR(8)      생년월일
-	- IDFC_NO_ENCR          VARCHAR(100)    주민등록번호암호화
-	- ADM_NM                VARCHAR(30)     관리자명
-	- ADM_AUTH_CD           VARCHAR(2)      관리자권한코드(00: 운영자, 01: 총관리자, 02: 카테고리관리자 등)
-	- ADM_RANK_NM           VARCHAR(50)     관리자직급명
-	- ADM_EMAL              VARCHAR(50)     관리자이메일
-	- ADM_CPNO              VARCHAR(15)     관리자휴대폰번호
-	- USE_YN                VARCHAR(1)      사용여부
-	- RMK_CNTS              TEXT(50000)     비고
-	- REG_ID                VARCHAR(50)     등록자ID
-	- REG_DTM               DATE            등록일시
-	- UPDT_ID               VARCHAR(50)     수정자ID
-	- UPDT_DTM              DATE            수정일시
+    * 관리자기본테이블 (TM_ADM)
+        - ADM_NO (PK)           VARCHAR(10)     관리자번호
+        - ADM_ID                VARCHAR(50)     관리자ID
+        - ADM_PWD_ENCR          VARCHAR(100)    관리자PWD암호화
+        - ADM_BTDT              VARCHAR(8)      생년월일
+        - IDFC_NO_ENCR          VARCHAR(100)    주민등록번호암호화
+        - ADM_NM                VARCHAR(30)     관리자명
+        - ADM_AUTH_CD           VARCHAR(2)      관리자권한코드(00: 운영자, 01: 총관리자, 02: 카테고리관리자 등)
+        - ADM_RANK_NM           VARCHAR(50)     관리자직급명
+        - ADM_EMAL              VARCHAR(50)     관리자이메일
+        - ADM_CPNO              VARCHAR(15)     관리자휴대폰번호
+        - USE_YN                VARCHAR(1)      사용여부
+        - RMK_CNTS              TEXT(50000)     비고
+        - REG_ID                VARCHAR(50)     등록자ID
+        - REG_DTM               DATETIME        등록일시
+        - UPDT_ID               VARCHAR(50)     수정자ID
+        - UPDT_DTM              DATETIME        수정일시
 
-    - 판매자기본테이블 (보류) - 나중에 중고서적 판매 카테고리 생성 시 설계필요
-	- MRK_NO (PK)       판매자번호
-	- MRK_NM            판매자명
+    * 판매자기본테이블 (보류) - 나중에 중고서적 판매 카테고리 생성 시 설계필요
+        - MRK_NO (PK)       판매자번호
+        - MRK_NM            판매자명
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 ** 서적관리테이블
 
-    - 서적관리기본테이블
-	- BK_NO (PK)            VARCHAR(20)     서적번호
-	- BK_KD_CD              VARCHAR(6)      서적종류코드
-	- SALE_NO               VARCHAR(10)     할인번호
-	- DCTN_YN               VARCHAR(1)      중단여부
-	- BK_CRT_DT             VARCHAR(8)      서적등록일자
-	- BK_NM                 VARCHAR(255)    서적명
-	- BK_AMT                INT()           금액
-	- BK_ATHR               VARCHAR(255)    저자
-	- BK_PG_CNT             INT()           쪽수
-	- RMK_CNTS              TEXT(50000)     비고
-	- BK_PBSR_NM            VARCHAR(50)     출판사명
-	- BK_STCK_CNT           INT()           재고
-	- BK_BS_IMG_SRC         VARCHAR(255)    서적기본이미지
-	- BK_DTLT_IMG           VARCHAR(255)    서적상세이미지
-	- RMK_CNTS              TEXT(50000)     비고
-	- REG_ID                VARCHAR(50)     등록자ID
-	- REG_DTM               DATE            등록일시
-	- UPDT_ID               VARCHAR(50)     수정자ID
-	- UPDT_DTM              DATE            수정일시
+    * 서적관리테이블 (TM_BK)
+        - BK_NO (PK)            VARCHAR(20)     서적번호
+        - BK_KD_CD              VARCHAR(6)      서적종류코드
+        - SALE_NO               VARCHAR(10)     할인번호
+        - DCTN_YN               VARCHAR(1)      중단여부
+        - BK_CRT_DT             VARCHAR(8)      서적등록일자
+        - BK_NM                 VARCHAR(255)    서적명
+        - BK_AMT                INT()           금액
+        - BK_ATHR               VARCHAR(255)    저자
+        - BK_PG_CNT             INT()           쪽수
+        - RMK_CNTS              TEXT(50000)     비고
+        - BK_PBSR_NM            VARCHAR(50)     출판사명
+        - BK_STCK_CNT           INT()           재고
+        - BK_BS_IMG_SRC         VARCHAR(255)    서적기본이미지
+        - BK_DTLT_IMG           VARCHAR(255)    서적상세이미지
+        - RMK_CNTS              TEXT(50000)     비고
+        - REG_ID                VARCHAR(50)     등록자ID
+        - REG_DTM               DATETIME        등록일시
+        - UPDT_ID               VARCHAR(50)     수정자ID
+        - UPDT_DTM              DATETIME        수정일시
 
-    - 서적할인관리테이블 	**  종류할인, 저자할인 같은 경우 할인시작일자, 종료일자가 겹칠 수 없도록 개발 필요
-	- SALE_NO (PK)          VARCHAR(10)     할인번호
-	- SALE_NM               VARCHAR(255)    할인명(이벤트명)
-	- SALE_ROIT             DECIMAL(3, 2)   할인율
-	- SALE_STA_DT           VARCHAR(8)      할인시작일자
-	- SALE_END_DT           VARCHAR(8)      할인종료일자
-	- SALE_DCTN_YN          VARCHAR(1)      할인중단여부(Y/N)
-	- ADM_NO                VARCHAR(10)     관리자번호
-	- SALE_TYPE_CD          VARCHAR(2)      할인종류코드(서적할인, 종류할인, 저자할인? 등)
-	- BK_NO                 VARCHAR(20)     서적번호
-	- BK_KD_CD              VARCHAR(6)      서적종류코드
-	- SALE_BS_IMG           VARCHAR(255)    할인기본이미지경로
-	- RMK_CNTS              TEXT(50000)     비고
-	- REG_ID                VARCHAR(50)     등록자ID
-	- REG_DTM               DATE            등록일시
-	- UPDT_ID               VARCHAR(50)     수정자ID
-	- UPDT_DTM              DATE            수정일시
+    * 서적할인관리테이블 (TD_BK_SALE) 	**  종류할인, 저자할인 같은 경우 할인시작일자, 종료일자가 겹칠 수 없도록 개발 필요
+        - SALE_NO (PK)          VARCHAR(10)     할인번호
+        - SALE_NM               VARCHAR(255)    할인명(이벤트명)
+        - SALE_ROIT             DECIMAL(3, 2)   할인율
+        - SALE_STA_DT           VARCHAR(8)      할인시작일자
+        - SALE_END_DT           VARCHAR(8)      할인종료일자
+        - SALE_DCTN_YN          VARCHAR(1)      할인중단여부(Y/N)
+        - ADM_NO                VARCHAR(10)     관리자번호
+        - SALE_TYPE_CD          VARCHAR(2)      할인종류코드(서적할인, 종류할인, 저자할인? 등)
+        - BK_NO                 VARCHAR(20)     서적번호
+        - BK_KD_CD              VARCHAR(6)      서적종류코드
+        - SALE_BS_IMG           VARCHAR(255)    할인기본이미지경로
+        - RMK_CNTS              TEXT(50000)     비고
+        - REG_ID                VARCHAR(50)     등록자ID
+        - REG_DTM               DATETIME        등록일시
+        - UPDT_ID               VARCHAR(50)     수정자ID
+        - UPDT_DTM              DATETIME        수정일시
 	
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 ** 거래관리테이블
 
-    - 장바구니테이블 
-	- CS_NO (PK)            VARCHAR(10)     고객번호
-	- BK_NO (PK)            VARCHAR(20)     서적번호
-	- AMNT                  INT()           수량
-	- CRT_DT                VARCHAR(8)      생성일자
-	- DEL_YN                VARCHAR(1)      삭제여부 (나중에 추천서비스를 위해 실제로 DEL하지 않기 위함)
-	- TR_NO                 VARCHAR(10)     거래번호
-	- RMK_CNTS              TEXT(50000)     비고
-	- REG_ID                VARCHAR(50)     등록자ID
-	- REG_DTM               DATE            등록일시
-	- UPDT_ID               VARCHAR(50)     수정자ID
-	- UPDT_DTM              DATE            수정일시
+    * 장바구니테이블 (TM_CART)
+        - CS_NO (PK)            VARCHAR(10)     고객번호
+        - BK_NO (PK)            VARCHAR(20)     서적번호
+        - AMNT                  INT()           수량
+        - CRT_DT                VARCHAR(8)      생성일자
+        - DEL_YN                VARCHAR(1)      삭제여부 (나중에 추천서비스를 위해 실제로 DEL하지 않기 위함)
+        - TR_NO                 VARCHAR(10)     거래번호
+        - RMK_CNTS              TEXT(50000)     비고
+        - REG_ID                VARCHAR(50)     등록자ID
+        - REG_DTM               DATETIME        등록일시
+        - UPDT_ID               VARCHAR(50)     수정자ID
+        - UPDT_DTM              DATETIME        수정일시
 
-    - 거래기본테이블
-	- TR_NO (PK)            VARCHAR(10)     거래번호
-	- TR_SQNO (PK)          VARCHAR(5)      거래일련번호
-	- CS_NO (PK)            VARCHAR(10)     고객번호
-	- CS_SQNO               INT(4, 0)       고객상세일련번호
-	- BK_NO                 VARCHAR(20)     서적번호
-	- TR_DT                 VARCHAR(8)      거래일자
-	- TR_SUC_YN             VARCHAR(1)      거래성공여부
-	- SALE_NO               VARCHAR(10)     할인번호
-	- BK_AMT                INT()           서적금액
-	- SALE_ROIT             DECIMAL(3, 2)   할인율
-	- TR_AMT                INT()           거래금액
-	- ZIP                   VARCHAR(6)      배송우편번호
-	- ADR                   VARCHAR(255)    배송주소
-	- DADR                  VARCHAR(255)    배송상세주소
-	- ARE_CD                VARCHAR(10)     지역코드
-	- RMK_CNTS              TEXT(50000)     비고
-	- REG_ID                VARCHAR(50)     등록자ID
-	- REG_DTM               DATE            등록일시
-	- UPDT_ID               VARCHAR(50)     수정자ID
-	- UPDT_DTM              DATE            수정일시
+    * 결제거래테이블 (TM_PAY_TR)
+        - TR_NO (PK)            VARCHAR(10)     거래번호
+        - TR_SQNO (PK)          VARCHAR(5)      거래일련번호
+        - CS_NO (PK)            VARCHAR(10)     고객번호
+        - CS_SQNO               INT(4, 0)       고객상세일련번호
+        - BK_NO                 VARCHAR(20)     서적번호
+        - TR_DT                 VARCHAR(8)      거래일자
+        - TR_SUC_YN             VARCHAR(1)      거래성공여부
+        - SALE_NO               VARCHAR(10)     할인번호
+        - BK_AMT                INT()           서적금액
+        - SALE_ROIT             DECIMAL(3, 2)   할인율
+        - TR_AMT                INT()           거래금액
+        - ZIP                   VARCHAR(6)      배송우편번호
+        - ADR                   VARCHAR(255)    배송주소
+        - DADR                  VARCHAR(255)    배송상세주소
+        - ARE_CD                VARCHAR(10)     지역코드
+        - RMK_CNTS              TEXT(50000)     비고
+        - REG_ID                VARCHAR(50)     등록자ID
+        - REG_DTM               DATETIME        등록일시
+        - UPDT_ID               VARCHAR(50)     수정자ID
+        - UPDT_DTM              DATETIME        수정일시
 
-    - 배송기본테이블
-	- DLV_NO (PK)           VARCHAR(12)     배송번호
-	- CS_NO                 VARCHAR(10)     고객번호
-	- CS_SQNO               INT(4, 0)       고객상세일련번호
-	- TR_NO                 VARCHAR(10)     거래번호
-	- TR_DT                 VARCHAR(8)      거래일자
-	- CS_NM                 VARCHAR(10)     고객명
-	- CPNO                  VARCHAR(8)      휴대폰번호
-	- EMAL                  VARCHAR(50)     이메일주소
-	- DLV_ZIP               VARCHAR(6)      배송우편번호
-	- DLV_ADR               VARCHAR(255)    배송주소
-	- DLV_DADR              VARCHAR(255)    배송상세주소
-	- DLV_ARE_CD            VARCHAR(10)     지역코드
-	- RMK_CNTS              TEXT(50000)     비고
-	- REG_ID                VARCHAR(50)     등록자ID
-	- REG_DTM               DATE            등록일시
-	- UPDT_ID               VARCHAR(50)     수정자ID
-	- UPDT_DTM              DATE            수정일시
+    * 결제배송테이블 (TM_PAY_DLV)
+        - DLV_NO (PK)           VARCHAR(12)     배송번호
+        - CS_NO                 VARCHAR(10)     고객번호
+        - CS_SQNO               INT(4, 0)       고객상세일련번호
+        - TR_NO                 VARCHAR(10)     거래번호
+        - TR_DT                 VARCHAR(8)      거래일자
+        - CS_NM                 VARCHAR(10)     고객명
+        - CPNO                  VARCHAR(8)      휴대폰번호
+        - EMAL                  VARCHAR(50)     이메일주소
+        - DLV_ZIP               VARCHAR(6)      배송우편번호
+        - DLV_ADR               VARCHAR(255)    배송주소
+        - DLV_DADR              VARCHAR(255)    배송상세주소
+        - DLV_ARE_CD            VARCHAR(10)     지역코드
+        - RMK_CNTS              TEXT(50000)     비고
+        - REG_ID                VARCHAR(50)     등록자ID
+        - REG_DTM               DATETIME        등록일시
+        - UPDT_ID               VARCHAR(50)     수정자ID
+        - UPDT_DTM              DATETIME        수정일시
 
 
