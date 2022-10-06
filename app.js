@@ -9,6 +9,10 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+/* mariaDB connect */
+const maria = require('./database/connect/maria');
+maria.connect();
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -37,12 +41,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-// 20221003_moon : database 라우터 추가 - DB생성이후 주석 제거 필요
-// const mysql = require('./database')();
-// const connection = mysql.init();
-// mysql.db_open(connection);
-
 
 // 20221003_moon : vendors 라우터 추가
 const vendorsRouter = require('./routes/vendors');
