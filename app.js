@@ -19,6 +19,25 @@ maria.connect();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+/* session 설정 : 20221010_오영문 */
+var session = require('express-session');
+var mySqlStore = require('express-mysql-session')(session);
+var options = {
+    host: 'localhost',
+    port: 3306,
+    user: 'root',
+    password: 'root123!',
+    database: 'mysql'
+};
+var sessionStore = new mySqlStore(options);
+
+app.use(session({
+    secret: "asdfasffdas",
+    resave: false,
+    saveUninitialized: true,
+    store: sessionStore
+}));
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

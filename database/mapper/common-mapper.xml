@@ -10,4 +10,21 @@
        AND CS_NO = #{csNo} 
      </if>
   </select>
+  <select id="selectLoginInfByCsId">
+    SELECT 
+      CS_NO       AS csNo
+    , CS_DV_CD    AS csDvCd
+    , JON_DT      AS jonDt
+    , CS_ID       AS csId
+    , CS_NM       AS csNm
+    , CPNO        AS cpno
+    , EMAL        AS emal
+    , BTDT        AS btdt
+    , SEX_CD      AS sexCd
+    , SMS_YS_YN   AS smsYsYn
+    , EMAL_YS_YN  AS emalYsYn
+      FROM TM_CS
+      WHERE CS_ID = #{csId}
+        AND CS_PWD_ENCR = #{csPwd}
+  </select>
 </mapper>
