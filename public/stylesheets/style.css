@@ -7,5 +7,11 @@ a {
   color: #00B7FF;
 }
 
-/* navbar 높이 조절 - 20221003_moon */
+/* navbar 높이 조절 - 20221003_오영문 */
 .navbar-nav > li > a { padding: 20px 22px }
+
+/* main 설정 - 20221010_오영문 */
+main { padding: 40px 0px 0px 40px}
+
+/* page title 설정 - 20221010_오영문 */
+#title {font-size: 30px; margin: 10px 0px 0px 10px; color: burlywood;}
