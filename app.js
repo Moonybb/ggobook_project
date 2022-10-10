@@ -4,6 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+/* 20221010_오영문 : .env 설정 */
+require('dotenv').config({ path: "config/env/.env.development.local"});
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var vendorsRouter = require('./routes/vendors'); // 20221003_오영문 : vendors 라우터 추가
@@ -23,16 +26,16 @@ app.set('view engine', 'ejs');
 var session = require('express-session');
 var mySqlStore = require('express-mysql-session')(session);
 var options = {
-    host: 'localhost',
+    host: process.env.MARIA_HOST,
     port: 3306,
-    user: 'root',
-    password: 'root123!',
-    database: 'mysql'
+    user: process.env.MARIA_USER,
+    password: process.env.MARIA_PASSWORD,
+    database: process.env.MARIA_DB
 };
 var sessionStore = new mySqlStore(options);
 
 app.use(session({
-    secret: "asdfasffdas",
+    secret: "keyboard cat",
     resave: false,
     saveUninitialized: true,
     store: sessionStore

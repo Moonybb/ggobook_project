@@ -44,6 +44,7 @@ router.post('/login_process', function(req, res){
         } else {
             // 로그인 실패
             res.send('입력하신 정보와 일치하는 회원정보가 존재하지 않습니다.');
+            
         }
       });
 });

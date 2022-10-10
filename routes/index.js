@@ -13,16 +13,17 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: '꼬북' });
 });
 
-// SQL parameter
-var param = {
-  csNo : '202210060001'
-};
-
-var format = {language: 'sql', indent: '  '};
-var query = mybatisMapper.getStatement('csInf', 'selectCsInf', param, format);
 
 
 router.get('/select', function(req, res, next) {
+  // SQL parameter
+  var param = {
+    csNo : '202210060001'
+  };
+
+  var format = {language: 'sql', indent: '  '};
+  var query = mybatisMapper.getStatement('csInf', 'selectCsInf', param, format);
+
   maria.query(query, function(err, rows, fields) {
     if(!err) {
       console.log("succ");
