@@ -33,10 +33,12 @@ router.post('/login_process', function(req, res){
     maria.query(query, function(err, result, fields) {
         if(err) throw err
         if(result[0] !== undefined) {
+
             /* session 정보 저장 */
-            req.session.uid = result[0].id;
-            req.session.author_id = result[0].author_id;
-            req.session.isLogined = true;
+            req.session.csNm = result[0].csNm;      // 고객명
+            req.session.csId = result[0].csId;      // 고객ID
+            req.session.emal = result[0].emal;      // 고객Email
+            req.session.isLogined = true;           // 로그인여부
 
             req.session.save(function() {
                 res.redirect('/');

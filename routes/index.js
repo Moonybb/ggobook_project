@@ -10,7 +10,9 @@ mybatisMapper.createMapper(['./database/mapper/common-mapper.xml']);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: '꼬북' });
+  console.log(req.session);
+
+  res.render('index', { title: '꼬북', session: req.session });
 });
 
 

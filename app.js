@@ -27,7 +27,7 @@ var session = require('express-session');
 var mySqlStore = require('express-mysql-session')(session);
 var options = {
     host: process.env.MARIA_HOST,
-    port: 3306,
+    port: process.env.MARIA_PORT,
     user: process.env.MARIA_USER,
     password: process.env.MARIA_PASSWORD,
     database: process.env.MARIA_DB
