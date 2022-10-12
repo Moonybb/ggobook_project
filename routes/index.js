@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-/* maria require - 20221006_moon */
+/* maria require - 20221006_오영문 */
 const maria = require('../database/connect/maria');
 
 /* common-mapper */
@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
 });
 
 
-
+// GET 예제입니다.
 router.get('/select', function(req, res, next) {
   // SQL parameter
   var param = {
@@ -32,6 +32,7 @@ router.get('/select', function(req, res, next) {
       res.send(rows);
     } else {
       console.log("err : " + err);
+      throw err;
     }
   });
 });

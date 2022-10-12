@@ -17,6 +17,7 @@
     , JON_DT      AS jonDt
     , CS_ID       AS csId
     , CS_NM       AS csNm
+    , CS_NCK_NM   AS csNckNm
     , CPNO        AS cpno
     , EMAL        AS emal
     , BTDT        AS btdt

@@ -1,4 +1,4 @@
-/* Maria Connect 접속정보 : 20221006_moon */
+/* Maria Connect 접속정보 : 20221006_오영문 */
 const maria = require('mysql');
 
 /* env require - 20221010_오영문 */

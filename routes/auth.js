@@ -35,10 +35,11 @@ router.post('/login_process', function(req, res){
         if(result[0] !== undefined) {
 
             /* session 정보 저장 */
-            req.session.csNm = result[0].csNm;      // 고객명
-            req.session.csId = result[0].csId;      // 고객ID
-            req.session.emal = result[0].emal;      // 고객Email
-            req.session.isLogined = true;           // 로그인여부
+            req.session.csNckNm = result[0].csNckNm; // 닉네임
+            req.session.csNm = result[0].csNm;       // 고객명
+            req.session.csId = result[0].csId;       // 고객ID
+            req.session.emal = result[0].emal;       // 고객Email
+            req.session.isLogined = true;            // 로그인여부
 
             req.session.save(function() {
                 res.redirect('/');
