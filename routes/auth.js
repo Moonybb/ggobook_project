@@ -7,6 +7,7 @@ const maria = require('../database/connect/maria');
 
 /* common-mapper */
 const mybatisMapper = require('mybatis-mapper');
+const e = require('express');
 mybatisMapper.createMapper(['./database/mapper/common-mapper.xml']);
 
 
@@ -18,8 +19,9 @@ router.get('/login', function(req, res){
 
 /* 로그인처리 */
 router.post('/login_process', function(req, res){
+    console.log('/login_process 호출됨');
+    
     var post = req.body;
-
     console.log(post);
 
     var loginParam = {
@@ -50,6 +52,22 @@ router.post('/login_process', function(req, res){
             
         }
       });
+});
+
+router.get('/logout', function(req, res){
+    console.log('/logout 호출됨');
+
+    if(req.session.isLogined) {
+        console.log('로그인상태 확인');
+        
+        req.session.destroy(function(err){
+            console.log('session 삭제.. 로그아웃됨');
+            res.redirect('/');
+        });
+    } else {
+        console.log('로그인상태 아님');
+        res.redirect('/auth/login');
+    }
 });
 
 module.exports = router;
