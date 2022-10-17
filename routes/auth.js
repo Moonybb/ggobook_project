@@ -10,15 +10,16 @@ const e = require('express');
 mybatisMapper.createMapper(['./database/mapper/common-mapper.xml']);
 
 
-/* 로그인페이지 */
+/* 로그인페이지 - auth/login (GET) */
 router.get('/login', function(req, res){
-    var title = 'Login';
-    res.render('login', { title: 'ggobook', session: req.session});
+    console.log('auth/login (GET) 호출됨');
+
+    res.render('login', { title: '로그인', session: req.session});
 });
 
-/* 로그인처리 */
+/* 로그인처리 - auth/login_process (POST) */
 router.post('/login_process', function(req, res){
-    console.log('/login_process 호출됨');
+    console.log('auth/login_process (POST) 호출됨');
     
     var post = req.body;
     console.log(post);
@@ -48,13 +49,13 @@ router.post('/login_process', function(req, res){
         } else {
             // 로그인 실패
             res.send('입력하신 정보와 일치하는 회원정보가 존재하지 않습니다.');
-            
         }
       });
 });
 
+/* 로그아웃처리 - auth/logout (GET) */
 router.get('/logout', function(req, res){
-    console.log('/logout 호출됨');
+    console.log('auth/logout (GET) 호출됨');
 
     if(req.session.isLogined) {
         console.log('로그인상태 확인');
@@ -68,5 +69,14 @@ router.get('/logout', function(req, res){
         res.redirect('/auth/login');
     }
 });
+
+/* 회원가입페이지 - auth/signup (GET) */
+router.get('/signup', function(req,res){
+    console.log('auth/signup (GET) 호출됨');
+
+    res.render('signup', {title: '회원가입', session: req.session});
+});
+
+
 
 module.exports = router;

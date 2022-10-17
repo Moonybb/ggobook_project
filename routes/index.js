@@ -12,11 +12,11 @@ mybatisMapper.createMapper(['./database/mapper/common-mapper.xml']);
 router.get('/', function(req, res, next) {
   console.log(req.session);
 
-  res.render('index', { title: 'ggobook', session: req.session });
+  res.render('index', { title: '메인페이지', session: req.session });
 });
 
 
-// GET 예제입니다.
+// GET 예제 - 20221006_오영문
 router.get('/select', function(req, res, next) {
   // SQL parameter
   var param = {
