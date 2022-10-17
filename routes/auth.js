@@ -1,5 +1,4 @@
 var express = require('express');
-const { response, request } = require('../app');
 var router = express.Router();
 
 /* maria require - 20221010_오영문 */
@@ -14,7 +13,7 @@ mybatisMapper.createMapper(['./database/mapper/common-mapper.xml']);
 /* 로그인페이지 */
 router.get('/login', function(req, res){
     var title = 'Login';
-    res.render('login', { title: '꼬북' });
+    res.render('login', { title: 'ggobook', session: req.session});
 });
 
 /* 로그인처리 */

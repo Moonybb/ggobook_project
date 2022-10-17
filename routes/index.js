@@ -12,7 +12,7 @@ mybatisMapper.createMapper(['./database/mapper/common-mapper.xml']);
 router.get('/', function(req, res, next) {
   console.log(req.session);
 
-  res.render('index', { title: '꼬북', session: req.session });
+  res.render('index', { title: 'ggobook', session: req.session });
 });
 
 
