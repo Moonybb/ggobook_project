@@ -15,17 +15,85 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
+    <!-- sigh CSS : 로그인 및 회원관련 CSS -->
+    <link href="/stylesheets/sign.css" rel="stylesheet">
+
+    <!-- jquery -->
+    <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+    
+    <script type="text/JavaScript">
+        $(document).ready(function() {
+
+            /* --------------------------------------------------------------------
+             * 함수명   : ID [중복확인] 버튼 FOCUS OUT EVENT
+             * 내용     : [중복확인] 버튼 FOCUS OUT 시 ID 중복확인을 진행한다(Ajax).
+             * 작성자   : 오영문
+             * -------------------------------------------------------------------- */
+            $(".id_confirm").on("focusout", function() {
+                var id = $('input[name=id]').val();
+
+                // 빈 값 체크
+                if(id == '' || id.length == 0) {
+                    alert("아이디를 입력해주세요."); 
+                    return false;
+                }
+
+                // 길이 체크
+                if(id.length < 5) {
+                    alert("아이디를 5글자 이상 입력해주세요.");
+                    return false;
+                }
+
+                $.ajax({
+                    url : "/auth/signup/id_confirm",
+                    type : "POST",
+                    dataType : "JSON",
+                    data : {"id" : id}
+                })
+
+                .done(function(json){
+                    
+                    if(json.succYn == "Y" && json.cnt == 0){
+                        $('#id_div').html('<a">사용가능한 ID입니다.</a>');
+                    }else {
+                        $('#id_div').html('<a style="color: red;">사용불가능한 ID입니다.</a>');
+                    }
+                    
+                })
+
+                .fail(function(xhr, status, errorThrown){
+                    console.log("Ajax 실패 : " + errorThrown);
+                    $('#id_div').html('<a style="color: red;">통신중 오류가 발생하였습니다.</a>');
+                })
+            });
+
+        });
+    </script>
+
   </head>
 
   <div class="container">
     <!-- navbar include -->
     <%- include('common/nav.ejs') %>
 
-  <main class="container form-signin w-100 m-auto">
+  <main class="container form-signup">
     
-      
-    <form class="row mb-4" action="/auth/login_process", method="post">
-        <h1 class="h2 mb-4"><%= title %></h1>
+    <h1 id="title" class="h2 mb-4"><%= title %></h1>
+    
+    <form class="" action="/auth/signup_process", method="post">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control id_confirm" id="signup_id" name="id" placeholder="아이디">
+            <label for="floating Input">아이디</label>
+            <div id="id_div"></div>
+        </div> 
+        <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="signup_pwd1" name="pwd" placeholder="비밀번호">
+            <label for="signup_pwd1">비밀번호</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="signup_pwd2" name="pwd2" placeholder="비밀번호확인">
+            <label for="signup_pwd2">비밀번호확인</label>
+        </div>
 
     </form>
   

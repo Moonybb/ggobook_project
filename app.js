@@ -22,6 +22,9 @@ maria.connect();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+/* node_modules static 폴더로 지정 : 20221017_오영문 */
+app.use('./node_modules', express.static(path.join(__dirname+'/node_modules')));
+
 /* session 설정 : 20221010_오영문 */
 var session = require('express-session');
 var mySqlStore = require('express-mysql-session')(session);

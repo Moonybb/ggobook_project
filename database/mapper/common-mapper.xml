@@ -28,4 +28,10 @@
       WHERE CS_ID = #{csId}
         AND CS_PWD_ENCR = #{csPwd}
   </select>
+  <select id="selectCsIdConfirm">
+    SELECT
+      COUNT(*) AS cnt
+      FROM TM_CS
+     WHERE CS_ID = #{csId}
+  </select>
 </mapper>
