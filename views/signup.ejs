@@ -25,8 +25,8 @@
         $(document).ready(function() {
 
             /* --------------------------------------------------------------------
-             * 함수명   : ID [중복확인] 버튼 FOCUS OUT EVENT
-             * 내용     : [중복확인] 버튼 FOCUS OUT 시 ID 중복확인을 진행한다(Ajax).
+             * 함수명   : 아이디 입력창 FOCUS OUT EVENT
+             * 내용     : 아이디 INPUT BOX FOCUS OUT 시 ID 중복확인을 진행한다(Ajax).
              * 작성자   : 오영문
              * -------------------------------------------------------------------- */
             $(".id_confirm").on("focusout", function() {
@@ -67,6 +67,22 @@
                 })
             });
 
+            /* --------------------------------------------------------------------
+             * 함수명   : 비밀번호 FOCUS OUT EVENT
+             * 내용     : 두번째 비밀번호 입력 후 FOCUS OUT 시 값이 같은지 체크한다.
+             * 작성자   : 오영문
+             * -------------------------------------------------------------------- */
+            $(".pwd_confirm").on("focusout", function() {
+                
+                if($("#signup_pwd1").val() != $("#signup_pwd2").val()
+                    && $("#signup_pwd1").val() != ""
+                    && $("#signup_pwd2").val() != "") {
+                    $('#pwd_div').html('<a style="color: red;">비밀번호가 일치하지 않습니다.</a>');
+                }else {
+                    $('#pwd_div').html('');
+                }
+            });
+
         });
     </script>
 
@@ -91,8 +107,9 @@
             <label for="signup_pwd1">비밀번호</label>
         </div>
         <div class="form-floating mb-3">
-            <input type="password" class="form-control" id="signup_pwd2" name="pwd2" placeholder="비밀번호확인">
-            <label for="signup_pwd2">비밀번호확인</label>
+            <input type="password" class="form-control pwd_confirm" id="signup_pwd2" name="pwd2" placeholder="비밀번호확인">
+            <label for="signup_pwd2">비밀번호 재확인</label>
+            <div id="pwd_div"></div>
         </div>
 
     </form>
