@@ -15,7 +15,8 @@ mybatisMapper.createMapper(['./database/mapper/common-mapper.xml']);
 router.get('/login', function(req, res){
     console.log('auth/login (GET) 호출됨');
 
-    res.render('login', { title: '로그인', session: req.session});
+    res.render('login', { title: '로그인'
+                        , session: req.session});
 });
 
 /* --------------------------------------------------------
@@ -23,9 +24,11 @@ router.get('/login', function(req, res){
  * -------------------------------------------------------- */
 router.post('/login_process', function(req, res){
     console.log('auth/login_process (POST) 호출됨');
-    
+
     var post = req.body;
     console.log(post);
+
+    var output = {};
 
     var loginDBParam = {
         csId : post.id,
@@ -38,7 +41,8 @@ router.post('/login_process', function(req, res){
     maria.query(query, function(err, result, fields) {
         if(err) throw err
         if(result[0] !== undefined) {
-
+            
+            /* 로그인 성공 */
             /* session 정보 저장 */
             req.session.csNckNm = result[0].csNckNm; // 닉네임
             req.session.csNm = result[0].csNm;       // 고객명
@@ -47,11 +51,20 @@ router.post('/login_process', function(req, res){
             req.session.isLogined = true;            // 로그인여부
 
             req.session.save(function() {
-                res.redirect('/');
+                
+                output = {
+                    succYn  : "Y",
+                    session : req.session
+                };
+                res.json(output);
             })
         } else {
-            // 로그인 실패
-            res.send('입력하신 정보와 일치하는 회원정보가 존재하지 않습니다.');
+            /* 로그인 실패 */
+            output = {
+                succYn  : "N",
+                session : req.session
+            };
+            res.json(output);
         }
       });
 });

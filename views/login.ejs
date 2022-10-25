@@ -18,6 +18,54 @@
     <!-- sigh CSS : 로그인 및 회원관련 CSS -->
     <link href="/stylesheets/sign.css" rel="stylesheet">
 
+    <!-- jquery -->
+    <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script type="text/JavaScript">
+      $(document).ready(function() {
+
+        $('#btnLogin').on('click', function() {
+
+          if($('#id').val().length == 0) {
+            alert("아이디를 입력해주세요.");
+          
+          }else if($('#pwd').val().length == 0){
+            alert("비밀번호를 입력해주세요.");
+          }
+
+          $.ajax({
+                url : "/auth/login_process",
+                type : "POST",
+                dataType : "JSON",
+                data : {"id"  : $('#id').val()
+                      , "pwd" : $('#pwd').val()}
+            })
+
+            .done(function(json){
+                
+                if(json.succYn == "Y"){
+
+                  $(location).attr('href', 'http://localhost:3000/');
+
+                }else {
+                  
+                  alert("아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.");
+
+                }
+                
+            })
+
+            .fail(function(xhr, status, errorThrown){
+                console.log("Ajax 실패 : " + errorThrown);
+                alert("통신중 오류가 발생하였습니다.");
+            })
+
+          });
+
+
+      });
+
+    </script>
   </head>
 
   <!-- navbar include -->
@@ -25,28 +73,28 @@
 
     <main class="container form-signin w-100 m-auto">
       
-      <form class="" action="/auth/login_process", method="post">
-        <!-- <img class="mb-4" src="/images/logo/ggobook_logo.jpg" alt="" width="72" height="57"> -->
-        <h1 class="h2 mb-4"><%= title %></h1>
-    
-        <div class="form-floating">
-          <input type="text" class="form-control" id="floatingInput" name="id" placeholder="아이디">
-          <label for="floatingInput">아이디</label>
-        </div>
-        <div class="form-floating">
-          <input type="password" class="form-control" id="floatingPassword" name="pwd" placeholder="비밀번호">
-          <label for="floatingPassword">비밀번호</label>
-        </div>
-    
-        <div class="checkbox mb-3">
-          <label>
-            <input type="checkbox" value="remember-me"> 로그인 상태 유지
-          </label>
-        </div>
-        <button type="submit" class="w-100 btn btn-lg btn-primary mb-2">로그인</button>
-        <button type="button" class="w-100 btn btn-lg btn-outline-secondary" onclick="location.href='/auth/signup'">회원가입</button>
-        <p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
-      </form>
+      <!-- <form class="" action="/auth/login_process", method="post"> -->
+      <!-- <img class="mb-4" src="/images/logo/ggobook_logo.jpg" alt="" width="72" height="57"> -->
+      <h1 class="h2 mb-4"><%= title %></h1>
+  
+      <div class="form-floating">
+        <input type="text" class="form-control" id="id" name="id" placeholder="아이디">
+        <label for="id">아이디</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" class="form-control" id="pwd" name="pwd" placeholder="비밀번호">
+        <label for="pwd">비밀번호</label>
+      </div>
+  
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me"> 로그인 상태 유지
+        </label>
+      </div>
+      <button type="button" id="btnLogin" class="w-100 btn btn-lg btn-primary mb-2">로그인</button>
+      <button type="button" class="w-100 btn btn-lg btn-outline-secondary" onclick="location.href='/auth/signup'">회원가입</button>
+      <p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
+      <!-- </form> -->
       
     </main>
 
