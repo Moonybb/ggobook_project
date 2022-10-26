@@ -42,17 +42,8 @@
             })
 
             .done(function(json){
-                
-                if(json.succYn == "Y"){
-
-                  $(location).attr('href', 'http://localhost:3000/');
-
-                }else {
-                  
-                  alert("아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.");
-
-                }
-                
+                if(json.succYn == "Y") $(location).attr('href', 'http://localhost:3000/');
+                else alert("아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.");
             })
 
             .fail(function(xhr, status, errorThrown){
@@ -91,7 +82,7 @@
           <input type="checkbox" value="remember-me"> 로그인 상태 유지
         </label>
       </div>
-      <button type="button" id="btnLogin" class="w-100 btn btn-lg btn-primary mb-2">로그인</button>
+      <button type="submit" id="btnLogin" class="w-100 btn btn-lg btn-primary mb-2">로그인</button>
       <button type="button" class="w-100 btn btn-lg btn-outline-secondary" onclick="location.href='/auth/signup'">회원가입</button>
       <p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
       <!-- </form> -->
