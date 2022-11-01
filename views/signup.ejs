@@ -28,9 +28,8 @@
         $(document).ready(function() {
 
             /* --------------------------------------------------------------------
-             * 함수명   : 아이디 입력창 FOCUS OUT EVENT
+             * 이벤트명 : 아이디 입력창 FOCUS OUT EVENT
              * 내용     : 아이디 INPUT BOX FOCUS OUT 시 ID 중복확인을 진행한다(Ajax).
-             * 작성자   : 오영문
              * -------------------------------------------------------------------- */
             $(".id_confirm").on("focusout", function() {
                 var id = $('input[name=id]').val();
@@ -76,9 +75,8 @@
             });
 
             /* --------------------------------------------------------------------
-             * 함수명   : 비밀번호 FOCUS OUT EVENT
+             * 이벤트명 : 비밀번호 FOCUS OUT EVENT
              * 내용     : 두번째 비밀번호 입력 후 FOCUS OUT 시 값이 같은지 체크한다.
-             * 작성자   : 오영문
              * -------------------------------------------------------------------- */
             $(".pwd_confirm").on("focusout", function() {
                 
@@ -91,7 +89,20 @@
                 }
             });
 
+            /* --------------------------------------------------------------------
+             * 이벤트명 : [회원가입] 버튼 CLICK 이벤트 핸들러
+             * 내용     : 두번째 비밀번호 입력 후 FOCUS OUT 시 값이 같은지 체크한다.
+             * -------------------------------------------------------------------- */
+            $("#btnSignUp").on("click", function() {
+                fn_signUpValidation();
+            });
+
         });
+
+        function fn_signUpValidation() {
+            console.log("fn_signUpValidation 함수 호출됨");
+        };
+
     </script>
 
   </head>
@@ -127,14 +138,14 @@
         <div class="row g-2 mb-3">
             <div class="col-md">
                 <div class="form-floating">
-                    <input type="text" class="form-control" name="my_num1" id="my_num1" maxlength="6" placeholder="주민번호 앞자리" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
-                    <label for="my_num1">주민등록번호 앞자리</label>
+                    <input type="text" class="form-control" name="idfcNo1" id="idfcNo1" maxlength="6" placeholder="주민번호 앞자리" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                    <label for="idfcNo1">주민등록번호 앞자리</label>
                 </div>
             </div>
             <div class="col-md">
                 <div class="form-floating">        
-                    <input type="password" class="form-control" name="my_num2" id="my_num2" maxlength="7" placeholder="주민번호 뒷자리">
-                    <label for="my_num2">주민등록번호 뒷자리</label>
+                    <input type="password" class="form-control" name="idfcNo2" id="idfcNo2" maxlength="7" placeholder="주민번호 뒷자리">
+                    <label for="idfcNo2">주민등록번호 뒷자리</label>
                 </div>
             </div>
         </div>
@@ -186,7 +197,7 @@
             <label for="cpno">휴대폰번호</label>
         </div>
 
-        <div class="row g-3 mb-3">
+        <div class="row g-2 mb-3">
             <div class="col-md">
                 <div class="form-floating">
                     <select class="form-select" id="smsYsYn" name="smsYsYn" aria-label="SMS수신동의여부">
@@ -207,17 +218,31 @@
                     <label for="emalYsYn">이메일수신동의여부</label>
                 </div>
             </div>
+        </div>
+
+        <div class="row g-3 mb-4">
             <div class="col-md">
                 <div class="form-floating">
-                    <select class="form-select" id="smsYsYn" name="smsYsYn" aria-label="SMS수신동의여부">
-                        <!-- <option selected>성별</option -->
-                        <option value="Y">동의</option>
-                        <option value="N">동의안함</option>
+                    <select class="form-select" id="" name="" aria-label="관심서적대분류">
+                        <option selected>선택</option>
+                        <option value="">소설</option>
+                        <option value="">개발</option>
                     </select>
-                    <label for="smsYsYn">SMS수신동의여부</label>
+                    <label for="">관심서적대분류</label>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-floating">
+                    <select class="form-select" id="" name="" aria-label="관심서적소분류">
+                        <option selected>선택</option>
+                        <option value="">추리소설</option>
+                        <option value="">등등</option>
+                    </select>
+                    <label for="">관심서적소분류</label>
                 </div>
             </div>
         </div>
+        <button type="button" id="btnSignUp" class="w-100 btn btn-lg btn-primary mb-4">회원가입</button>
     </form>
   
   </main>

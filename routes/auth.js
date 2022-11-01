@@ -132,8 +132,6 @@ router.post('/signup/id_confirm', function(req, res){
 
         res.json(output);
     });
-    
-    
 });
 
 
