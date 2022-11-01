@@ -116,12 +116,14 @@ router.post('/signup/id_confirm', function(req, res){
     maria.query(query, function(err, result, fields) {
         if(err) throw err
         if(result[0].cnt == 0) {
+            console.log("사용가능한 아이디입니다.");
             output = {
                 succYn : 'Y',
                 cnt : result[0].cnt
             };
 
         } else {
+            console.log("이미 존재하는 아이디입니다.");
             output = {
                 succYn : 'N',
                 cnt : result[0].cnt

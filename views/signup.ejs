@@ -22,6 +22,9 @@
     <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
     
     <script type="text/JavaScript">
+
+        var idChckYn = 'N';
+
         $(document).ready(function() {
 
             /* --------------------------------------------------------------------
@@ -56,14 +59,17 @@
                 .done(function(json){
                     
                     if(json.succYn == "Y" && json.cnt == 0){
+                        idChckYn = 'Y';
                         $('#id_div').html('<a>사용가능한 ID입니다.</a>');
                     }else {
+                        idChckYn = 'N';
                         $('#id_div').html('<a style="color: red;">사용불가능한 ID입니다.</a>');
                     }
                     
                 })
 
                 .fail(function(xhr, status, errorThrown){
+                    idChckYn = 'N';
                     console.log("Ajax 실패 : " + errorThrown);
                     $('#id_div').html('<a style="color: red;">통신중 오류가 발생하였습니다.</a>');
                 })
