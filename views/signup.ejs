@@ -99,8 +99,30 @@
 
         });
 
+
         function fn_signUpValidation() {
             console.log("fn_signUpValidation 함수 호출됨");
+            
+            // 아이디 중복 체크
+            if(idChckYn != "Y") {
+                alert("사용불가능한 ID입니다.");
+                return;
+            }
+
+            // 비밀번호 입력 체크
+            if($("#signup_pwd1").val() == "" || $("#signup_pwd2").val() == ""){
+                alert("비밀번호를 입력해주세요.");
+                return;
+            }
+
+            // 비밀번호 재확인 일치여부 체크
+            if($("#signup_pwd1").val() != $("#signup_pwd2").val()) {
+                alert("비밀번호가 일치하지 않습니다.");
+                return;
+            }
+
+            
+
         };
 
     </script>
