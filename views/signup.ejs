@@ -121,7 +121,22 @@
                 return;
             }
 
-            
+            // 주민등록번호 체크
+            if($("#idfcNo1").val() == "" || $("#idfcNo2").val() == ""
+            || $("#idfcNo1").val().length != 6 || $("#idfcNo2").val().length != 7) {
+                alert("주민등록번호를 확인해주세요.");
+                return;
+            }
+
+            // 닉네임 체크
+            if($("#nckNm").val().length == 0){
+                alert("닉네임을 입력해주세요.");
+                return;
+            }
+            if(!($("#nckNm").val().length > 0 && $("#nckNm").val().length <= 30)) {
+                alert("닉네임은 30글자 이내로 입력해주세요.");
+                return;
+            }
 
         };
 
