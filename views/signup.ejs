@@ -80,9 +80,9 @@
              * -------------------------------------------------------------------- */
             $(".pwd_confirm").on("focusout", function() {
                 
-                if($("#signup_pwd1").val() != $("#signup_pwd2").val()
-                    && $("#signup_pwd1").val() != ""
-                    && $("#signup_pwd2").val() != "") {
+                console.log("비밀번호 재확인 체크");
+
+                if($("#pwd1").val() != $("#pwd2").val()) {
                     $('#pwd_div').html('<a style="color: red;">비밀번호가 일치하지 않습니다.</a>');
                 }else {
                     $('#pwd_div').html('');
@@ -94,12 +94,20 @@
              * 내용     : 두번째 비밀번호 입력 후 FOCUS OUT 시 값이 같은지 체크한다.
              * -------------------------------------------------------------------- */
             $("#btnSignUp").on("click", function() {
-                fn_signUpValidation();
+                var signUpValiResult = fn_signUpValidation();
+
+                if(signUpValiResult) {
+                    // 회원가입 입력폼 validation 통과
+                    fn_registSignUpPrcs();
+                }
             });
 
         });
 
-
+        /* --------------------------------------------------------------------
+        * 함수명    : 회원가입 VALIDATION
+        * 내용      : 회원가입 처리 전 입력폼 값 VALIDATION 수행
+        * -------------------------------------------------------------------- */
         function fn_signUpValidation() {
             console.log("fn_signUpValidation 함수 호출됨");
             
@@ -138,7 +146,60 @@
                 return;
             }
 
+            // 생년월일 체크
+            if($("#btdtYear").val().length == 0
+            || $("#btdtMonth").val().length == 0
+            || $("#btdtDay").val().length == 0) {
+                alert("생년월일을 입력해주세요.");
+            }
+
+            // 휴대폰번호 체크
+            if($("#cpno").val().length < 10) {
+                alert("휴대폰 번호를 확인해주세요.");
+                return;
+            }
+            return true;
         };
+
+
+        /* --------------------------------------------------------------------
+        * 함수명    : 회원가입 처리
+        * 내용      : 회원가입을 처리한다.
+        * -------------------------------------------------------------------- */
+        function fn_registSignUpPrcs() {
+
+            $.ajax({
+                url : "/auth/signup_process",
+                type : "POST",
+                dataType : "JSON",
+                data : {"id"        : $("#id").val(),
+                        "pwd"       : $("#pwd1").val(),
+                        "idfcNo1"   : $("#idfcNo1").val(),
+                        "idfcNo2"   : $("#idfcNo2").val(),
+                        "nckNm"     : $("#nckNm").val(),
+                        "btdt"      : $("#btdtYear").val() + $("#btdtMonth").val() + $("#btdtDay").val(),
+                        "sexCd"     : $("#sexCd").val(),
+                        "cpno"      : $("#cpno").val(),
+                        "smsYsYn"   : $("#smsYsYn").val(),
+                        "emalYsYn"  : $("#emalYsYn").val() 
+                    }
+            })
+
+            .done(function(json){
+                
+                if(json.succYn == "Y"){
+                    
+                }else {
+                    
+                }
+                
+            })
+
+            .fail(function(xhr, status, errorThrown){
+                console.log("Ajax 실패 : " + errorThrown);
+
+            })
+        }
 
     </script>
 
@@ -161,10 +222,9 @@
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="nckNm" name="nckNm" placeholder="닉네임">
             <label for="nckNm">닉네임</label>
-            <div id="pwd_div"></div>
         </div>
         <div class="form-floating mb-3">
-            <input type="password" class="form-control" id="pwd" name="pwd" placeholder="비밀번호">
+            <input type="password" class="form-control pwd_confirm" id="pwd1" name="pwd1" placeholder="비밀번호">
             <label for="pwd">비밀번호</label>
         </div>
         <div class="form-floating mb-3">
@@ -196,7 +256,7 @@
             <div class="col-md">
                 <div class="form-floating">
                     <select class="form-select" id="btdtMonth" name="btdtMonth" aria-label="월">
-                        <option selected>월</option>
+                        <option value="" selected>월</option>
                         <option value="01">1</option>
                         <option value="02">2</option>
                         <option value="03">3</option>

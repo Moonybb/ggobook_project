@@ -134,6 +134,22 @@ router.post('/signup/id_confirm', function(req, res){
     });
 });
 
+/* --------------------------------------------------------
+ * 회원가입처리 - auth/signup_process (POST)
+ * -------------------------------------------------------- */
+router.post('/signup_process', function(req, res){
+    console.log("auth/signup_process (POST) 호출됨");
+
+    var inputJSON = req.body;
+    var output = {};
+
+    
+
+    
+    res.json(output);
+
+});
+
 
 
 module.exports = router;
